@@ -1,23 +1,22 @@
 # Experiment--05-Implementation-of-flipflops-using-verilog
-### AIM: To implement all the flipflops using verilog and validating their functionality using their functional tables
-### HARDWARE REQUIRED:  – PC, Cyclone II , USB flasher
+### AIM:
+ To implement all the flipflops using verilog and validating their functionality using their functional tables
+### HARDWARE REQUIRED:  PC, Cyclone II , USB flasher
 ### SOFTWARE REQUIRED:   Quartus prime
 ### THEORY 
-SR Flip-Flop
+
 SR flip-flop operates with only positive clock transitions or negative clock transitions. Whereas, SR latch operates with enable signal. The circuit diagram of SR flip-flop is shown in the following figure.
 
 ![image](https://user-images.githubusercontent.com/36288975/167910294-bb550548-b1dc-4cba-9044-31d9037d476b.png)
 
  
-This circuit has two inputs S & R and two outputs Qtt & Qtt’. The operation of SR flipflop is similar to SR Latch. But, this flip-flop affects the outputs only when positive transition of the clock signal is applied instead of active enable.
-The following table shows the state table of SR flip-flop.
+This circuit has two inputs S & R and two outputs Qtt & Qtt’. The operation of SR flipflop is similar to SR Latch. But, this flip-flop affects the outputs only when positive transition of the clock signal is applied instead of active enable.The following table shows the state table of SR flip-flop.
 
 
 ![image](https://user-images.githubusercontent.com/36288975/167910648-ced88e69-869c-42e2-9718-a285a3902446.png)
 
 
-Here, Qtt & Qt+1t+1 are present state & next state respectively. So, SR flip-flop can be used for one of these three functions such as Hold, Reset & Set based on the input conditions, when positive transition of clock signal is applied. The following table shows the characteristic table of SR flip-flop.
-Present Inputs	Present State	Next State
+Here, Qtt & Qt+1t+1 are present state & next state respectively. So, SR flip-flop can be used for one of these three functions such as Hold, Reset & Set based on the input conditions, when positive transition of clock signal is applied. The following table shows the characteristic table of SR flip-flop.Present Inputs	Present State	Next State
 
 
 ![image](https://user-images.githubusercontent.com/36288975/167908180-5fc9d589-1cb5-41f5-b2c8-927e04f5f387.png)
@@ -57,8 +56,7 @@ JK flip-flop is the modified version of SR flip-flop. It operates with only posi
 ![image](https://user-images.githubusercontent.com/36288975/167910378-d2d984a7-2815-4d17-8c41-ee4bdf59ec24.png) 
 
  
-This circuit has two inputs J & K and two outputs Qtt & Qtt’. The operation of JK flip-flop is similar to SR flip-flop. Here, we considered the inputs of SR flip-flop as S = J Qtt’ and R = KQtt in order to utilize the modified SR flip-flop for 4 combinations of inputs.
-The following table shows the state table of JK flip-flop.
+This circuit has two inputs J & K and two outputs Qtt & Qtt’. The operation of JK flip-flop is similar to SR flip-flop. Here, we considered the inputs of SR flip-flop as S = J Qtt’ and R = KQtt in order to utilize the modified SR flip-flop for 4 combinations of inputs.The following table shows the state table of JK flip-flop.
 
 
 ![image](https://user-images.githubusercontent.com/36288975/167908575-59c35afb-50d3-46a2-888c-47478a3179d5.png)
@@ -86,8 +84,7 @@ T flip-flop is the simplified version of JK flip-flop. It is obtained by connect
 
 
 
-This circuit has single input T and two outputs Qtt & Qtt’. The operation of T flip-flop is same as that of JK flip-flop. Here, we considered the inputs of JK flip-flop as J = T and K = T in order to utilize the modified JK flip-flop for 2 combinations of inputs. So, we eliminated the other two combinations of J & K, for which those two values are complement to each other in T flip-flop.
-The following table shows the state table of T flip-flop.
+This circuit has single input T and two outputs Qtt & Qtt’. The operation of T flip-flop is same as that of JK flip-flop. Here, we considered the inputs of JK flip-flop as J = T and K = T in order to utilize the modified JK flip-flop for 2 combinations of inputs. So, we eliminated the other two combinations of J & K, for which those two values are complement to each other in T flip-flop.The following table shows the state table of T flip-flop.
 
 
 
@@ -102,39 +99,104 @@ Q(t+1)=T′Q(t)+TQ(t)′
 ⇒Q(t+1)=T⊕Q(t)
 
 ### Procedure
-/* write all the steps invloved */
+1.Using nand gates and wires construct sr flip flop.
+
+2.Repeat same steps to construct JK,D,T flipflops.
+
+3.Find Rtl logic and timing diagram for all flipflops.
+
+4.end the program.
 
 
 
 ### PROGRAM 
+``` 
 /*
 Program for flipflops  and verify its truth table in quartus using Verilog programming.
-Developed by: 
-RegisterNumber:  
+Developed by:SHREE LEKHA.S 
+RegisterNumber: 23014046
 */
 
+``` 
+####  SR FLIP FLOP:
+```
+module srf(s,r,clk,q,qbar);
+input s,r,clk;
+output reg q;
+output qbar;
+always@(posedge clk)
+begin
+q= s|((~r)&q);
+end
+assign qbar=~q;
+endmodule
+```
+#### D FLIP FLOP:
+```
+module dff1(d,clk,q,qbar);
+input d,clk;
+output reg q;
+output qbar;
+always @(posedge clk )
+begin
+q=d;
+end
+assign qbar=~q;
+endmodule 
+```
+#### JK FLIP FLOP:
+```
+module jk(j,k,clk,q,qbar);
+input j,k,clk;
+output q,qbar;
+reg q,qbar;
+always@(posedge clk)
+begin
+q<=(j&~q)|(~k&q);
+qbar<=~q;
+end
+endmodule
+```
+#### T FLIP FLOP:
+```
+module tff1(t,clk,q,qbar);
+input t,clk;
+output reg q;
+output qbar;
+always @(posedge clk )
+begin
+q = q^t;
+end
+assign qbar=~q;
+endmodule 
 
-
-
-
+```
 
 ### RTL LOGIC FOR FLIPFLOPS 
+####  SR FLIP FLOP:
+![output](/srf/Screenshot%202023-11-26%20163737.png)
 
+#### D FLIP FLOP:
+![output](/d%20flip%20flop/D-Flip%20flop_diagram.png)
 
+#### JK FLIP FLOP:
+![output](/jk/Screenshot%202023-11-26%20164229.png)
 
-
-
-
-
-
+#### T FLIP FLOP:
+![output](/T%20Flipflop/T-Flip%20flop%20diagram.png)
 
 ### TIMING DIGRAMS FOR FLIP FLOPS 
 
-
-
-
-
+####  SR FLIP FLOP:
+![output](/srf/Screenshot%202023-11-26%20163710.png)
+#### D FLIP FLOP:
+![output](/d%20flip%20flop/D-Flip%20flop%20waveform.png)
+#### JK FLIP FLOP:
+![output](/jk/Screenshot%202023-11-26%20164517.png)
+#### T FLIP FLOP:
+![output](/T%20Flipflop/T-Flip%20flop%20waveform.png)
 
 
 
 ### RESULTS 
+Thus implementation of SR,JK,D and T flipflops using nand gates are done sucessfully.
